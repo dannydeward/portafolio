@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora y Formulación Gastronómica</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container py-4">
+    <h2 class="mb-4 text-primary">Panel de Formulación y Conversiones</h2>
+
+    <!-- Navegación por Pestañas -->
+    <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active fw-bold" data-bs-toggle="tab" data-bs-target="#formulacion" type="button">
+                1. Formulación Láctea (Factor de Escala)
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link fw-bold" data-bs-toggle="tab" data-bs-target="#conversiones" type="button">
+                2. Densidades y Medidas Caseras
+            </button>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+<!-- PESTAÑA 1: FORMULADOR UNIVERSAL FLEXIBLE -->
+<div class="tab-pane fade show active" id="formulacion">
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+            <span class="fw-bold">Formulador Universal por Porcentajes sobre Base</span>
+            <button class="btn btn-sm btn-outline-secondary" onclick="restaurarUniversal()">Restaurar Valores por Defecto</button>
+        </div>
+        <div class="card-body">
+            <p class="text-muted small">
+                Cambia el ingrediente base (leche, vino, agua, etc.) y su cantidad. Los aditivos se calcularán automáticamente como un porcentaje exacto sobre el peso total de la base.
+            </p>
+
+ <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Escalador Universal de Recetas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container py-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <span class="fw-bold">Calculadora y Escalador de Recetas</span>
+            <div class="d-flex gap-2">
+                <select id="selector_receta" class="form-select form-select-sm" onchange="cargarRecetaSeleccionada()">
+                    {% for key, r in recetas.items() %}
+                    <option value="{{ key }}">{{ r.nombre }}</option>
+                    {% endfor %}
+                </select>
+                <button class="btn btn-sm btn-success text-nowrap" data-bs-toggle="modal" data-bs-target="#modalNuevaReceta">
+                    + Nueva Receta
+                </button>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="alert alert-info py-2 small">
+                <strong>Modo de uso:</strong> Elige una receta arriba. Luego modifica <strong>cualquier fila</strong> (por ejemplo, pon cuánto tienes de un ingrediente) y toda la tabla se recalculará automáticamente.
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-bordered align-middle text-center">
+                    <thead class="table-secondary">
+                        <tr>
+                            <th class="text-start">Ingrediente</th>
+                            <th style="width: 160px;">Cantidad a Usar</th>
+                            <th style="width: 100px;">Unidad</th>
+                            <th>Equivalente en Gramos (g)</th>
+                            <th>Equivalente en Volumen (ml)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody_escalador"></tbody>
+                </table>
+            </div>
+            <div class="text-end">
+                <button class="btn btn-sm btn-outline-secondary" onclick="cargarRecetaSeleccionada()">Restaurar cantidades originales</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL PARA CREAR Y GUARDAR UNA NUEVA RECETA -->
+<div class="modal fade" id="modalNuevaReceta" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Guardar Nueva Ficha Técnica / Receta</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Nombre de la Receta:</label>
+                    <input type="text" id="nueva_receta_nombre" class="form-control" placeholder="Ej: Salsa de soja dulce / Fermento de manzana">
+                </div>
+                <table class="table table-sm table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Ingrediente</th>
+                            <th>Cantidad Base</th>
+                            <th>Unidad</th>
+                            <th>Densidad (opcional, solo líquidos)</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody_nueva_receta">
+                        <tr>
+                            <td><input type="text" class="form-control form-control-sm nr-nombre" placeholder="Ej: Vino de manzana"></td>
+                            <td><input type="number" step="any" class="form-control form-control-sm nr-cant" value="1000"></td>
+                            <td>
+                                <select class="form-select form-select-sm nr-unidad">
+                                    <option value="g">g</option>
+                                    <option value="ml" selected>ml</option>
+                                </select>
+                            </td>
+                            <td><input type="number" step="any" class="form-control form-control-sm nr-dens" value="1.00" placeholder="Vacío si es sólido"></td>
+                            <td><button class="btn btn-sm btn-danger" onclick="this.closest('tr').remove()">✕</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn btn-sm btn-outline-primary" onclick="agregarFilaModal()">+ Agregar otro ingrediente</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="guardarNuevaReceta()">Guardar Receta</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    let todasLasRecetas = {{ recetas | tojson }};
+    let recetaActual = [];
+    let bloqueado = false;
+
+    function cargarRecetaSeleccionada() {
+        const key = document.getElementById('selector_receta').value;
+        // Clonamos los datos originales de la receta elegida
+        recetaActual = JSON.parse(JSON.stringify(todasLasRecetas[key].ingredientes));
+        renderizarTabla();
+    }
+
+    function renderizarTabla() {
+        const tbody = document.getElementById('tbody_escalador');
+        tbody.innerHTML = '';
+
+        recetaActual.forEach((item, index) => {
+            const gramos = item.unidad === 'g' ? item.cantidad : item.cantidad * (item.densidad || 1);
+            const ml = item.densidad ? (gramos / item.densidad).toFixed(1) + ' ml' : 'Sólido';
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td class="text-start fw-semibold">${item.nombre}</td>
+                <td>
+                    <input type="number" step="any" class="form-control text-center fw-bold text-primary" 
+                           id="inp_${index}" value="${item.cantidad.toFixed(2)}" 
+                           oninput="escalarTodo(${index}, this.value)">
+                </td>
+                <td class="fw-bold">${item.unidad}</td>
+                <td id="eq_g_${index}">${gramos.toFixed(2)} g</td>
+                <td id="eq_ml_${index}" class="text-muted">${ml}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function escalarTodo(indexModificado, nuevoValorStr) {
+        if (bloqueado) return;
+        bloqueado = true;
+
+        const nuevoValor = parseFloat(nuevoValorStr);
+        if (isNaN(nuevoValor) || nuevoValor <= 0) {
+            bloqueado = false;
+            return;
+        }
+
+        const factor = nuevoValor / recetaActual[indexModificado].cantidad;
+
+        recetaActual.forEach((item, idx) => {
+            item.cantidad = item.cantidad * factor;
+            
+            const inp = document.getElementById(`inp_${idx}`);
+            if (inp && document.activeElement !== inp) {
+                inp.value = item.cantidad.toFixed(2);
+            }
+
+            const gramos = item.unidad === 'g' ? item.cantidad : item.cantidad * (item.densidad || 1);
+            document.getElementById(`eq_g_${idx}`).innerText = gramos.toFixed(2) + ' g';
+            document.getElementById(`eq_ml_${idx}`).innerText = item.densidad ? (gramos / item.densidad).toFixed(1) + ' ml' : 'Sólido';
+        });
+
+        bloqueado = false;
+    }
+
+    function agregarFilaModal() {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td><input type="text" class="form-control form-control-sm nr-nombre" placeholder="Ingrediente"></td>
+            <td><input type="number" step="any" class="form-control form-control-sm nr-cant" value="10"></td>
+            <td>
+                <select class="form-select form-select-sm nr-unidad">
+                    <option value="g" selected>g</option>
+                    <option value="ml">ml</option>
+                </select>
+            </td>
+            <td><input type="number" step="any" class="form-control form-control-sm nr-dens" placeholder="Vacío si es sólido"></td>
+            <td><button class="btn btn-sm btn-danger" onclick="this.closest('tr').remove()">✕</button></td>
+        `;
+        document.getElementById('tbody_nueva_receta').appendChild(tr);
+    }
+
+    async function guardarNuevaReceta() {
+        const nombre = document.getElementById('nueva_receta_nombre').value.trim();
+        if (!nombre) return alert("Ponle un nombre a la receta");
+
+        const ingredientes = [];
+        document.querySelectorAll('#tbody_nueva_receta tr').forEach(tr => {
+            const nom = tr.querySelector('.nr-nombre').value.trim();
+            const cant = parseFloat(tr.querySelector('.nr-cant').value);
+            const uni = tr.querySelector('.nr-unidad').value;
+            const dens = parseFloat(tr.querySelector('.nr-dens').value) || null;
+            if (nom && cant > 0) {
+                ingredientes.push({ nombre: nom, cantidad: cant, unidad: uni, densidad: dens });
+            }
+        });
+
+        const res = await fetch('/guardar_receta', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nombre, ingredientes })
+        });
+        const data = await res.json();
+        if (data.status === 'ok') {
+            location.reload(); // Recarga para mostrar la nueva receta en el menú
+        }
+    }
+
+    // Arrancar con la primera receta
+    cargarRecetaSeleccionada();
+</script>
+</body>
+</html>
+        <!-- PESTAÑA 2: DENSIDADES Y MEDIDAS CASERAS -->
+        <div class="tab-pane fade" id="conversiones">
+            <div class="row">
+                <!-- Conversor Rápido -->
+                <div class="col-md-5 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-header bg-primary text-white fw-bold">Conversor Rápido ml ↔ g</div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Selecciona el líquido:</label>
+                                <select class="form-select" id="select_liquido" onchange="convertirRapido('ml')">
+                                    {% for d in densidades %}
+                                    <option value="{{ d.factor }}">{{ d.nombre }} (Factor: {{ d.factor }})</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <label class="form-label">Mililitros (ml)</label>
+                                    <input type="number" step="any" class="form-control" id="conv_ml" value="100" oninput="convertirRapido('ml')">
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label">Gramos (g)</label>
+                                    <input type="number" step="any" class="form-control" id="conv_g" value="100" oninput="convertirRapido('g')">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabla de Medidas Caseras -->
+                <div class="col-md-7 mb-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-header bg-white fw-bold">Equivalencias por Medidas Caseras (en Gramos)</div>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-striped mb-0 text-center">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="text-start">Medida</th>
+                                        <th>Volumen</th>
+                                        <th>Agua (1.00)</th>
+                                        <th>Aceite (0.92)</th>
+                                        <th>Leche (1.03)</th>
+                                        <th>Vinagre (1.01)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for m in medidas %}
+                                    <tr>
+                                        <td class="text-start fw-semibold">{{ m.nombre }}</td>
+                                        <td>{{ m.ml }} ml</td>
+                                        <td>{{ "%.1f"|format(m.ml * 1.00) }} g</td>
+                                        <td>{{ "%.1f"|format(m.ml * 0.92) }} g</td>
+                                        <td>{{ "%.1f"|format(m.ml * 1.03) }} g</td>
+                                        <td>{{ "%.1f"|format(m.ml * 1.01) }} g</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabla Completa de Densidades -->
+            <div class="card shadow-sm">
+                <div class="card-header bg-white fw-bold">Tabla de Densidades de Cocina</div>
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0 text-center">
+                        <thead class="table-light">
+                            <tr>
+                                <th class="text-start">Ingrediente</th>
+                                <th>Factor (g/ml)</th>
+                                <th>100 ml en gramos</th>
+                                <th>250 ml (1 taza) en gramos</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for d in densidades %}
+                            <tr>
+                                <td class="text-start">{{ d.nombre }}</td>
+                                <td class="fw-bold">{{ d.factor }}</td>
+                                <td>{{ "%.1f"|format(100 * d.factor) }} g</td>
+                                <td>{{ "%.1f"|format(250 * d.factor) }} g</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // --- LÓGICA DE ESCALADO DE RECETA ---
+    function aplicarFactor(factor, origenKey = null) {
+        if (isNaN(factor) || factor < 0) return;
+        document.getElementById('badge-factor').innerText = factor.toFixed(3);
+
+        document.querySelectorAll('.input-g').forEach(input => {
+            const key = input.dataset.key;
+            const base = parseFloat(input.dataset.base);
+            const densidad = parseFloat(input.dataset.densidad);
+            const nuevosGramos = base * factor;
+
+            if (key !== origenKey) {
+                input.value = nuevosGramos.toFixed(2);
+            }
+            if (!isNaN(densidad)) {
+                const inputMl = document.getElementById('ml_' + key);
+                if (document.activeElement !== inputMl) {
+                    inputMl.value = (nuevosGramos / densidad).toFixed(2);
+                }
+            }
+        });
+
+        const totalLecheG = 960 * factor;
+        const inputTotal = document.getElementById('total_leche_g');
+        if (document.activeElement !== inputTotal) {
+            inputTotal.value = totalLecheG.toFixed(1);
+        }
+        document.getElementById('total_leche_ml').innerText = (totalLecheG / 1.03).toFixed(1) + ' ml (aprox)';
+    }
+
+    function escalarDesdeGramos(key) {
+        const input = document.getElementById('g_' + key);
+        const val = parseFloat(input.value);
+        const base = parseFloat(input.dataset.base);
+        aplicarFactor(val / base, key);
+    }
+
+    function escalarDesdeMl(key) {
+        const inputMl = document.getElementById('ml_' + key);
+        const densidad = parseFloat(inputMl.dataset.densidad);
+        const gramosEquivalentes = parseFloat(inputMl.value) * densidad;
+        
+        const inputG = document.getElementById('g_' + key);
+        inputG.value = gramosEquivalentes.toFixed(2);
+        const base = parseFloat(inputG.dataset.base);
+        aplicarFactor(gramosEquivalentes / base, key);
+    }
+
+    function escalarDesdeTotalLeche() {
+        const totalDeseado = parseFloat(document.getElementById('total_leche_g').value);
+        aplicarFactor(totalDeseado / 960);
+    }
+
+    function resetearReceta() {
+        aplicarFactor(1);
+    }
+
+    // --- LÓGICA CONVERSOR RÁPIDO ---
+    function convertirRapido(origen) {
+        const factor = parseFloat(document.getElementById('select_liquido').value);
+        const inputMl = document.getElementById('conv_ml');
+        const inputG = document.getElementById('conv_g');
+
+        if (origen === 'ml') {
+            inputG.value = (parseFloat(inputMl.value) * factor).toFixed(2);
+        } else {
+            inputMl.value = (parseFloat(inputG.value) / factor).toFixed(2);
+        }
+    }
+</script>
+</body>
+</html>
