@@ -1,0 +1,48 @@
+[
+  {
+  "titulo": "Análisis Netflix 2023",
+  "descripcion": "Dashboard interactivo mostrando tendencias de usuarios, géneros más vistos y distribución por país.",
+  "herramientas": ["Python", "Pandas", "Matplotlib", "Power BI"],
+  "carpeta": "netflix", 
+  "imagenes": ["1.webp", "2.webp", "3.webp", "4.webp"],
+  "link_codigo": null
+},
+
+{
+  "titulo": "Desechos Reciclables",
+  "descripcion": "Dashboard que nos muestra la evolucion de la recoleccion de reciclables",
+  "herramientas": ["Python", "Pandas", "Matplotlib", "Power BI"],
+  "carpeta": "desechos reciclables", 
+  "imagenes": ["1.webp", "4.webp", "5.webp", "4.webp"],
+  "link_codigo": null
+},
+
+{
+  "titulo": "Infidelidad",
+  "descripcion": "Estudio en  realizado en la universidad , sobre quien es mas infiel ",
+  "herramientas": ["Python", "Pandas", "Matplotlib", "googlecolab"],
+  "carpeta": "infidelidad", 
+  "imagenes": ["1.png", "2.png", "3.png", "4.png", "5.png","6.png","7.png"],
+  "link_codigo": null
+},
+
+{
+  "titulo": "Mar",
+  "descripcion": "Analisis de Datset sobre la explotacion maritima y las Posibilidades Argentinas en ese campo ",
+  "herramientas": ["Python", "Pandas", "Matplotlib", "googlecolab"],
+  "carpeta": "mar", 
+  "imagenes": ["portada.png","produciion_pais.png", "produccionpkm2.png", "producion_anualT.png", "producion_regional.png"],
+  "link_codigo": null
+},
+
+{
+  "titulo": "Rappi",
+  "descripcion": "Analisis de DataSet de una tienda de comida por aplicaciones, caso Rappi ",
+  "herramientas": ["Python", "Pandas", "Matplotlib", "googlecolab"],
+  "carpeta": "rappi", 
+  "imagenes": ["datset.png", "distribucion.png", "facturacion.png", "metodo pago.png", "proporcion.png","ventas por dia.png"],
+  "link_codigo": null
+}
+
+
+]

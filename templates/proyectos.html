@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Proyectos - Mi Portafolio{% endblock %}
+
+{% block content %}
+<section class="proyectos-section">
+    <div class="container">
+        <h2 class="section-title">Mis proyectos</h2>
+        <p class="section-subtitle">Organizados por categoría. Haz clic en cada pestaña para filtrar.</p>
+        
+        <!-- PESTAÑAS -->
+        <div class="tabs">
+            <button class="tab-btn active" data-category="todos">
+                <i class="fa-solid fa-layer-group"></i> Todos
+            </button>
+            {% for cat_id, cat_data in categorias.items() %}
+            <button class="tab-btn" data-category="{{ cat_id }}">
+                <i class="fa-solid {{ cat_data.icono }}"></i> {{ cat_data.nombre }}
+            </button>
+            {% endfor %}
+        </div>
+        
+        <!-- GRID DE PROYECTOS -->
+        <div class="grid-proyectos">
+            {% for cat_id, cat_data in categorias.items() %}
+                {% for i in cat_data.repos %}
+                <article class="card" data-category="{{ cat_id }}">
+                    <div class="card-header">
+                        <i class="fa-solid fa-folder-open"></i>
+                        <div class="card-links">
+                            <a href="{{ github }}" target="_blank"><i class="fa-brands fa-github"></i></a>
+                            {% if demo %}
+                            <a href="{{ demo }}" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <h3>{{ p.nombre }}</h3>
+                    <p>{{ p.descripcion }}</p>
+                    <div class="card-footer">
+                        <div class="tecnologias">
+                            {% for tech in tecnologias %}
+                            <span class="tech-tag">{{ tech }}</span>
+                            {% endfor %}
+                        </div>
+                        {% if estrellas > 0 %}
+                        <span class="stars"><i class="fa-solid fa-star"></i> {{ estrellas }}</span>
+                        {% endif %}
+                    </div>
+                </article>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- SCRIPT PARA LAS PESTAÑAS -->
+<script>
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const cards = document.querySelectorAll('.card');
+
+    tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Quitar active de todos los botones
+            tabButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const category = btn.dataset.category;
+
+            cards.forEach(card => {
+                if (category === 'todos' || card.dataset.category === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

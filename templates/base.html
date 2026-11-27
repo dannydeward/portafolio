@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Mi Portafolio{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Iconos de Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="{{ url_for('index') }}" class="logo">&lt;/&gt;</a>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('index') }}">Inicio</a></li>
+                <li><a href="#proyectos-github">Proyectos GitHub</a></li>
+                <li><a href="#analisis-datos">Análisis de Datos</a></li> <!-- Ahora apunta a la sección -->
+                 <li><a href="#contacto">Contacto</a></li>
+</ul>
+        </div>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- FOOTER -->
+    <footer id="contacto">
+        <div class="container">
+            <p>Hecho con <i class="fa-solid fa-heart"></i> usando Flask</p>
+            <div class="social-links">
+                <a href="https://github.com/tu-usuario" target="_blank"><i class="fa-brands fa-github"></i></a>
+                <a href="https://linkedin.com/in/tu-usuario" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="mailto:tu@email.com"><i class="fa-solid fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

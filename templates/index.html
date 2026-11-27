@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - Mi Portafolio{% endblock %}
+
+{% block content %}
+<!-- HERO / SOBRE MÍ -->
+<section class="hero">
+    <div class="container hero-container">
+        <!-- Bloque de texto (izquierda) -->
+        <div class="hero-text">
+            <h1>Hola, soy <span class="highlight">Danny Deward Ramirez Molina</span></h1>
+            <p class="subtitle">Desarrollador y Analista de Datos </p>
+            <p>Construyo aplicaciones web programas y analisis que brindan soluciones .</p>
+            <div class="hero-buttons">
+                <a href="{{ url_for('proyectos') }}" class="btn btn-primary">Ver proyectos</a>
+                <a href="https://github.com/dannydeward" class="btn btn-secondary" target="_blank">Mi GitHub</a>
+            </div>
+        </div>
+        
+        <!-- Bloque de imagen (derecha) -->
+        <div class="hero-image">
+            <img src="{{ url_for('static', filename='img/danny.jpeg') }}" alt="Foto de Danny Deward">
+        </div>
+    </div>
+</section>
+
+<!-- PROYECTOS DESTACADOS (GITHUB) -->
+<section class="proyectos-section" id="proyectos-github">
+    <div class="container">
+        <h2 class="section-title">Proyectos destacados</h2>
+        <div class="grid-proyectos">
+            {% for i in proyectos_destacados %}
+            <article class="card">
+                <div class="card-header">
+                    <i class="fa-solid fa-folder-open"></i>
+                    <div class="card-links">
+                        <a href="{{ i.github }}" target="_blank" title="Ver código"><i class="fa-brands fa-github"></i></a>
+                        {% if i.demo %}
+                        <a href="{{ i.demo }}" target="_blank" title="Ver demo"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h3>{{ i.nombre }}</h3>
+                    <p>{{ i.descripcion }}</p>
+                </div>
+                <div class="card-footer">
+                    <div class="tecnologias">
+                        {% for tech in i.tecnologias %}
+                        <span class="tech-tag">{{ tech }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+        <div class="ver-mas">
+            <a href="{{ url_for('proyectos') }}" class="btn btn-secondary">Ver todos los proyectos →</a>
+        </div>
+    </div>
+</section>
+
+<!-- SECCIÓN: ANÁLISIS DE DATOS -->
+<section class="proyectos-section" id="analisis-datos">
+    <div class="container">
+        <h2 class="section-title">Análisis de Datos y Visualización</h2>
+        <p class="section-subtitle">Proyectos de exploración, limpieza y visualización de datos.</p>
+        
+        <div class="grid-proyectos">
+            {% for p in proyectos_analisis %}
+            <article class="card card-analisis">
+                <!-- Contenedor de múltiples imágenes -->
+                <div class="card-imagenes">
+                    {% for img in p.imagenes %}
+                    <img src="{{ url_for('static', filename='img/analisis/' + p.carpeta + '/' + img) }}" alt="Gráfica de {{ p.titulo }}">
+                    {% endfor %}
+                </div>
+                
+                <div class="card-body">
+                    <h3>{{ p.titulo }}</h3>
+                    <p>{{ p.descripcion }}</p>
+                </div>
+                
+                <div class="card-footer">
+                    <div class="tecnologias">
+                        {% for tech in p.herramientas %}
+                        <span class="tech-tag">{{ tech }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- CATEGORÍAS EN EL HOME -->
+<section class="categorias-section">
+    <div class="container">
+        <h2 class="section-title">¿Qué hago?</h2>
+        <div class="categorias-grid">
+            <a href="{{ url_for('proyectos') }}" class="categoria-card">
+                <i class="fa-solid fa-globe"></i>
+                <h3>Aplicaciones Web</h3>
+                <p>Interfaces modernas con Flask, Django y tecnologías frontend.</p>
+            </a>
+            <a href="{{ url_for('proyectos') }}" class="categoria-card">
+                <i class="fa-solid fa-server"></i>
+                <h3>Programas y Automatizacion con python</h3>
+                <p>Herramientas CLI, scrapers y bots que ahorran tiempo</p>
+            </a>
+            <a href="{{ url_for('proyectos') }}" class="categoria-card">
+                <i class="fa-solid fa-chart-column"></i>
+                <h3>Análisis  de datos </h3>
+                <p>Limpieza, organizacion, evaluacion y presentacion de datos.</p>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills-section">
+    <div class="container">
+        <h2 class="section-title">Stack tecnológico</h2>
+        <div class="skills-grid">
+            <div class="skill"><i class="fa-brands fa-python"></i> Python</div>
+            <div class="skill"><i class="fa-solid fa-database"></i> PostgreSQL</div>
+            <div class="skill"><i class="fa-solid fa-chart-pie"></i> Power BI</div>
+            <div class="skill"><i class="fa-solid fa-chart-area"></i> Looker Studio</div>
+            <div class="skill"><i class="fa-brands fa-git-alt"></i> Git</div>
+            <div class="skill"><i class="fa-solid fa-table"></i> Pandas</div>
+        </div>
+    </div>
+</section>
+{% endblock %}
